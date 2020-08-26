@@ -1,22 +1,29 @@
 package com.dbs.bean;
 
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-
-@Data
-@Slf4j
-public class MediaPrototype {
+public abstract class MediaPrototype {
     private String name;
-    @Autowired
-    private PetProjectSingleton petProjectSingleton;
+    private String type;
 
-    public void publish(){
-        String message = new StringBuilder()
-                .append(petProjectSingleton.getName())
-                .append(" has been published to ")
-                .append(this.name)
-                .toString();
-        log.info(message);
+    public MediaPrototype(String name, String type) {
+        this.setName(name);
+        this.setType(type);
+    }
+
+    public abstract MediaPrototype clone();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

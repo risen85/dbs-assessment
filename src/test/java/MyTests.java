@@ -1,35 +1,29 @@
-import com.dbs.bean.MediaPrototype;
 import com.dbs.bean.PetProjectSingleton;
-import com.dbs.config.AppConfig;
+import com.dbs.bean.SocialMedia;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
 
 public class MyTests {
     @Test
-    public void testSingleTon(){
-        AbstractApplicationContext context
-                = new AnnotationConfigApplicationContext(AppConfig.class);
-        PetProjectSingleton petA = context.getBean(PetProjectSingleton.class);
-        PetProjectSingleton petB = context.getBean(PetProjectSingleton.class);
+    public void testSingleTon() {
+
+        PetProjectSingleton petA = PetProjectSingleton.getInstance();
+        PetProjectSingleton petB = PetProjectSingleton.getInstance();
         String name = "Dog Project";
         petA.setName(name);
 
-        Assert.assertEquals(name,petB.getName());
+        Assert.assertEquals(name, petB.getName());
     }
 
     @Test
-    public void testPrototype(){
-        AbstractApplicationContext context
-                = new AnnotationConfigApplicationContext(AppConfig.class);
-        MediaPrototype mediaA = context.getBean(MediaPrototype.class);
-        MediaPrototype mediaB = context.getBean(MediaPrototype.class);
+    public void testPrototype() {
+        SocialMedia twitterMedia = new SocialMedia("Twitter", "Social Media");
+        SocialMedia hackernewsMedia = twitterMedia.clone();
+        hackernewsMedia.setName("Hackernews");
+        Assert.assertEquals("Twitter", twitterMedia.getName());
+        Assert.assertEquals("Hackernews", hackernewsMedia.getName());
 
-        mediaA.setName("Twitter");
-        mediaB.setName("Hackernews");
-        Assert.assertEquals("Twitter",mediaA.getName());
-        Assert.assertEquals("Hackernews",mediaB.getName());
-
+        Assert.assertEquals("Social Media", twitterMedia.getType());
+        Assert.assertEquals("Social Media", hackernewsMedia.getType());
     }
 }

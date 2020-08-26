@@ -1,18 +1,15 @@
-import com.dbs.bean.MediaPrototype;
 import com.dbs.bean.PetProjectSingleton;
-import com.dbs.config.AppConfig;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import com.dbs.bean.SocialMedia;
 
 public class MainApp {
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        PetProjectSingleton petProjectSingleton = context.getBean(PetProjectSingleton.class);
+
+        PetProjectSingleton petProjectSingleton = PetProjectSingleton.getInstance();
         petProjectSingleton.setName("Dog Project");
-        MediaPrototype twitterMedia = context.getBean(MediaPrototype.class);
-        MediaPrototype hackernewsMedia = context.getBean(MediaPrototype.class);
-        MediaPrototype redditMedia = context.getBean(MediaPrototype.class);
-        twitterMedia.setName("Twitter");
+        SocialMedia twitterMedia = new SocialMedia("Twitter", "Social Media");
+        SocialMedia hackernewsMedia = twitterMedia.clone();
         hackernewsMedia.setName("Hackernews");
+        SocialMedia redditMedia = twitterMedia.clone();
         redditMedia.setName("Reddit");
 
         twitterMedia.publish();
